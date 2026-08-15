@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assessment Result | RiskFlow</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body class="bg-light min-vh-100 d-flex flex-column">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-navy sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/">
+                <i class="bi bi-shield-check text-primary fs-4"></i>
+                <span>Risk<span class="text-primary">Flow</span></span>
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/"><i class="bi bi-arrow-left me-1"></i> New Assessment</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Prediction Display -->
+    <main class="container my-auto py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                    <div class="card-header bg-white border-bottom p-4 text-center">
+                        <span class="text-uppercase tracking-wide small text-muted fw-bold">Prediction Output</span>
+                        <h2 class="h5 fw-bold mb-0 mt-1">Loan Risk Evaluation Result</h2>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5 text-center">
+
+                        {% if prediction|string == "[0]" or prediction|string == "0" %}
+                        <!-- Case 0: Low Risk / No Default -->
+                        <div class="result-icon-wrapper bg-success-subtle text-success mx-auto mb-4 rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-shield-check display-4"></i>
+                        </div>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-semibold mb-2">
+                            Assessment Status: Approved Profile
+                        </span>
+                        <h3 class="h3 fw-bold text-success mb-3">Low Default Risk</h3>
+                        <p class="text-muted mb-4">
+                            The machine learning model classifies this borrower as <strong>unlikely to default</strong> based on the submitted debt ratio, credit score, and financial background.
+                        </p>
+                        {% else %}
+                        <!-- Case 1: High Risk / Default Detected -->
+                        <div class="result-icon-wrapper bg-danger-subtle text-danger mx-auto mb-4 rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-exclamation-triangle-fill display-4"></i>
+                        </div>
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 rounded-pill fw-semibold mb-2">
+                            Assessment Status: Elevated Risk
+                        </span>
+                        <h3 class="h3 fw-bold text-danger mb-3">High Default Risk</h3>
+                        <p class="text-muted mb-4">
+                            The machine learning model classifies this borrower as having a <strong>high probability of default</strong>. Further manual underwriting or collateral verification is recommended.
+                        </p>
+                        {% endif %}
+
+                        <div class="p-3 bg-light rounded-3 border text-start mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted small fw-medium">Pipeline Output:</span>
+                                <code class="fw-bold fs-6 text-dark">{{ prediction }}</code>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <a href="/" class="btn btn-primary btn-lg fw-semibold shadow-sm py-2">
+                                <i class="bi bi-arrow-repeat me-2"></i>Assess Another Loan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-navy text-muted py-4 border-top border-secondary-subtle mt-auto">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <span class="small text-secondary-light">RiskFlow &mdash; Loan Default Risk Prediction System</span>
+            <span class="small text-secondary-light">Machine Learning Final Project</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

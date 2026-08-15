@@ -1,0 +1,65 @@
+/* RiskFlow Custom Stylesheet */
+
+:root {
+    --rf-navy: #0f172a;
+    --rf-navy-light: #1e293b;
+    --rf-primary: #2563eb;
+    --rf-primary-hover: #1d4ed8;
+    --rf-bg-light: #f8fafc;
+    --rf-text-muted-light: #94a3b8;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #334155;
+    background-color: var(--rf-bg-light);
+}
+
+.bg-dark-navy {
+    background-color: var(--rf-navy) !important;
+}
+
+.text-secondary-light {
+    color: var(--rf-text-muted-light) !important;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary {
+    background-color: var(--rf-primary);
+    border-color: var(--rf-primary);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--rf-primary-hover);
+    border-color: var(--rf-primary-hover);
+}
+
+.form-control, .form-select {
+    border-radius: 0.5rem;
+    border: 1px solid #cbd5e1;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--rf-primary);
+    box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.15);
+}
+
+.form-text {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.tracking-wide {
+    letter-spacing: 0.05em;
+}
+
+.result-icon-wrapper {
+    width: 96px;
+    height: 96px;
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RiskFlow | Loan Default Risk Prediction</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body class="bg-light">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-navy sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/">
+                <i class="bi bi-shield-check text-primary fs-4"></i>
+                <span>Risk<span class="text-primary">Flow</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#assessment-form">Risk Assessment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About Model</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-white text-center py-5">
+        <div class="container py-4">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle mb-3 px-3 py-2 rounded-pill fw-semibold">
+                Machine Learning Credit Risk Engine
+            </span>
+            <h1 class="display-5 fw-bold mb-3">Assess Loan Default Risk</h1>
+            <p class="lead text-secondary-light mx-auto mb-4" style="max-width: 680px;">
+                Enter borrower financial details, loan parameters, and credit history to compute an automated risk classification using our validated ML pipeline.
+            </p>
+            <a href="#assessment-form" class="btn btn-primary btn-lg px-4 shadow-sm fw-semibold">
+                <i class="bi bi-cpu me-2"></i>Start Assessment
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content / Form Section -->
+    <main class="container my-5" id="assessment-form">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <h2 class="h5 fw-bold mb-1 text-dark">Loan Application Assessment</h2>
+                                <p class="text-muted small mb-0">Fill in all 16 attributes accurately for the risk classification.</p>
+                            </div>
+                            <span class="badge bg-light text-secondary border px-3 py-2">All fields required</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+                        <form action="/predict" method="post">
+                            
+                            <!-- Section 1: Borrower Information -->
+                            <div class="mb-5">
+                                <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-person-badge text-primary fs-5"></i>
+                                    <h3 class="h6 fw-bold text-uppercase tracking-wide mb-0 text-secondary">Borrower Information</h3>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="age" class="form-label fw-medium">Age</label>
+                                        <input type="number" class="form-control" id="age" name="age" min="18" max="100" placeholder="e.g. 35" required />
+                                        <div class="form-text">Range: 18 – 100 years</div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="income" class="form-label fw-medium">Annual Income ($)</label>
+                                        <input type="number" class="form-control" id="income" name="income" placeholder="e.g. 75000" required />
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="credit_score" class="form-label fw-medium">Credit Score</label>
+                                        <input type="number" class="form-control" id="credit_score" name="credit_score" min="300" max="850" placeholder="e.g. 720" required />
+                                        <div class="form-text">Range: 300 – 850</div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="months_employed" class="form-label fw-medium">Months Employed</label>
+                                        <input type="number" class="form-control" id="months_employed" name="months_employed" min="0" placeholder="e.g. 48" required />
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="education" class="form-label fw-medium">Education</label>
+                                        <select class="form-select" id="education" name="education" required>
+                                            <option value="" disabled selected>Select level</option>
+                                            <option value="High School">High School</option>
+                                            <option value="Bachelor's">Bachelor's</option>
+                                            <option value="Master's">Master's</option>
+                                            <option value="PhD">PhD</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="employment_type" class="form-label fw-medium">Employment Type</label>
+                                        <select class="form-select" id="employment_type" name="employment_type" required>
+                                            <option value="" disabled selected>Select employment</option>
+                                            <option value="Full-time">Full-time</option>
+                                            <option value="Part-time">Part-time</option>
+                                            <option value="Self-employed">Self-employed</option>
+                                            <option value="Unemployed">Unemployed</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="marital_status" class="form-label fw-medium">Marital Status</label>
+                                        <select class="form-select" id="marital_status" name="marital_status" required>
+                                            <option value="" disabled selected>Select status</option>
+                                            <option value="Single">Single</option>
+                                            <option value="Married">Married</option>
+                                            <option value="Divorced">Divorced</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label for="has_dependents" class="form-label fw-medium">Has Dependents</label>
+                                        <select class="form-select" id="has_dependents" name="has_dependents" required>
+                                            <option value="" disabled selected>Select option</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Loan Information -->
+                            <div class="mb-5">
+                                <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-cash-coin text-primary fs-5"></i>
+                                    <h3 class="h6 fw-bold text-uppercase tracking-wide mb-0 text-secondary">Loan Specifications</h3>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6 col-lg-4">
+                                        <label for="loan_amount" class="form-label fw-medium">Loan Amount ($)</label>
+                                        <input type="number" class="form-control" id="loan_amount" name="loan_amount" placeholder="e.g. 25000" required />
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <label for="interest_rate" class="form-label fw-medium">Interest Rate (%)</label>
+                                        <input type="number" step="0.01" class="form-control" id="interest_rate" name="interest_rate" placeholder="e.g. 8.75" required />
+                                    </div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <label for="loan_term" class="form-label fw-medium">Loan Term (Months)</label>
+                                        <input type="number" class="form-control" id="loan_term" name="loan_term" placeholder="e.g. 36" required />
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        <label for="loan_purpose" class="form-label fw-medium">Loan Purpose</label>
+                                        <select class="form-select" id="loan_purpose" name="loan_purpose" required>
+                                            <option value="" disabled selected>Select purpose</option>
+                                            <option value="Home">Home</option>
+                                            <option value="Auto">Auto</option>
+                                            <option value="Education">Education</option>
+                                            <option value="Business">Business</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        <label for="dti_ratio" class="form-label fw-medium">Debt-to-Income (DTI) Ratio</label>
+                                        <input type="number" step="0.01" class="form-control" id="dti_ratio" name="dti_ratio" placeholder="e.g. 0.35" required />
+                                        <div class="form-text">Ratio expressed as decimal or percentage base</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Credit & Security -->
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+                                    <i class="bi bi-shield-lock text-primary fs-5"></i>
+                                    <h3 class="h6 fw-bold text-uppercase tracking-wide mb-0 text-secondary">Credit Profile &amp; Collateral</h3>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="num_credit_lines" class="form-label fw-medium">Active Credit Lines</label>
+                                        <input type="number" class="form-control" id="num_credit_lines" name="num_credit_lines" min="0" placeholder="e.g. 4" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="has_mortgage" class="form-label fw-medium">Has Existing Mortgage</label>
+                                        <select class="form-select" id="has_mortgage" name="has_mortgage" required>
+                                            <option value="" disabled selected>Select option</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="has_cosigner" class="form-label fw-medium">Has Co-Signer</label>
+                                        <select class="form-select" id="has_cosigner" name="has_cosigner" required>
+                                            <option value="" disabled selected>Select option</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Form Submit Button -->
+                            <div class="d-grid pt-3">
+                                <button type="submit" class="btn btn-primary btn-lg fw-semibold shadow-sm py-3">
+                                    <i class="bi bi-speedometer2 me-2"></i>Assess Risk
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Technical Info Section -->
+    <section class="bg-white py-5 border-top" id="about">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-3">Enterprise Grade Risk Analytics</h3>
+                    <p class="text-muted">
+                        RiskFlow integrates gradient-boosted decision trees (XGBoost) and Scikit-learn pipelines with MLflow experiment tracking to deliver instant loan default classifications based on multidimensional applicant data.
+                    </p>
+                    <div class="row g-3 pt-2">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <span class="fw-medium text-secondary">Real-Time Scoring</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <span class="fw-medium text-secondary">Containerized Pipeline</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="p-4 bg-light rounded-4 border">
+                        <h4 class="h6 fw-bold text-uppercase text-secondary mb-3">Output Classes</h4>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="p-3 bg-white border rounded-3 d-flex align-items-center justify-content-between">
+                                <span class="fw-semibold text-success"><i class="bi bi-shield-check me-2"></i>Class 0</span>
+                                <span class="text-muted small">Low Default Risk / Favorable</span>
+                            </div>
+                            <div class="p-3 bg-white border rounded-3 d-flex align-items-center justify-content-between">
+                                <span class="fw-semibold text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Class 1</span>
+                                <span class="text-muted small">High Default Risk / Adverse</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-navy text-muted py-4 border-top border-secondary-subtle">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <span class="small text-secondary-light">RiskFlow &mdash; Loan Default Risk Prediction System</span>
+            <span class="small text-secondary-light">Machine Learning Final Project</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
